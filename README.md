@@ -1,9 +1,10 @@
 # ALU
 
 La unidad aritmético-lógica de este datapath, también conocida como ALU, es un circuito digital que calcula operaciones aritméticas y operaciones lógicas, entre los valores de dos registros de entrada (Registro A y B).
+
 El esquema de la ALU esta compuesto por 3 entradas y 2 salidas: 
 ##### Entradas:
-#
+
 |Nombre| Detalle|Cant. Bits|
 |------|--------|----------|
 |__A_i__| Registro A Proveniente de la memoria de registros| 64 bits |
@@ -11,7 +12,7 @@ El esquema de la ALU esta compuesto por 3 entradas y 2 salidas:
 |__ALU_op_i__| Operacion de la ALU. Proveniente de la Unidad de Control| 4 bits
 
 ##### Salidas:
-#
+
 |Nombre| Detalle|Cant. Bits|
 |------|--------|----------|
 |__SAL_o__ |Resultado de la ALU| 64 bits
