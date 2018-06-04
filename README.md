@@ -28,7 +28,7 @@ Las operaciones que realiza la ALU se especifican en la siguiente tabla:
 |---------|------|-----------|
 |ADD      |0000  |A+B        |
 |SUB|0001 |A-B|
-|NOT|0010 |???|
+|NOT|0010 |niega la entrada|
 |AND|0011 |A and B|
 |OR |0100 |A or B |
 |XOR|0101 |A xor B |
