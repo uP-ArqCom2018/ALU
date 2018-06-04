@@ -9,7 +9,7 @@ El esquema de la ALU esta compuesto por 3 entradas y 2 salidas:
 |------|--------|----------|
 |__A_i__| Registro A Proveniente de la memoria de registros| 64 bits |
 |__B_i__| Registro B. Proveniente de la memoria de registros o del dato inmediato| 64 bits
-|__ALU_op_i__| Operacion de la ALU. Proveniente de la Unidad de Control| 4 bits
+|__ALUop_i__| Operacion de la ALU. Proveniente de la Unidad de Control| 4 bits
 
 ##### Salidas:
 
