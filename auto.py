@@ -38,7 +38,7 @@ src = ['ALU']
 tb = 'ALU_tb'
 
 #En time se indica el tiempo de simulacion en microsegundos
-time = 50000000000
+#time = 50000000000
 
 # Se crea el Manifest.py en carpeta src
 f = open('src/Manifest.py','w')
@@ -65,7 +65,8 @@ if not os.path.exists("sim"):
 
 f = open('sim/Manifest.py','w')
 f.write('action = "simulation"\nsim_tool = "ghdl"\nsim_top = "%s"\n' %(tb))
-f.write('\nsim_post_cmd = "ghdl -r %s --stop-time=%dus --vcd=%s.vcd; gtkwave %s.vcd"\n' %(tb,time,tb,tb))
+#f.write('\nsim_post_cmd = "ghdl -r %s --stop-time=%dus --vcd=%s.vcd; gtkwave %s.vcd"\n' %(tb,time,tb,tb))
+f.write('\nsim_post_cmd = "ghdl -r %s --vcd=%s.vcd; gtkwave %s.vcd"\n' %(tb,tb,tb))
 f.write('\nmodules = {\n  "local" : [ "../test" ],\n}\n')
 
 f.close()

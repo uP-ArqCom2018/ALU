@@ -7,35 +7,38 @@ entity ALU_tb is
 end ALU_tb;
 
 architecture alu_arch_tb of ALU_tb is
-
+constant N: integer := 64;
 -- Defino el componente
 component ALU is
-    generic (N : integer :=64);
+    generic (N : integer := 64);
     port (
-		  A_i   : in  std_logic_vector(N - 1 downto 0);
-          B_i   : in  std_logic_vector(N - 1 downto 0);
-          SAL_o    : out std_logic_vector(N - 1 downto 0);
-		  ALUop_i	     : in  unsigned(3 downto 0);
-		  Zero_o      : out std_logic
+		  A_i    : in  std_logic_vector(N - 1 downto 0);
+          B_i    : in  std_logic_vector(N - 1 downto 0);
+          SAL_o  : out std_logic_vector(N - 1 downto 0);
+		  ALUop_i: in  std_logic_vector(3 downto 0);
+		  Zero_o : out std_logic
 		  );
 end component;
 
-signal :  A_i   : in  std_logic_vector(N - 1 downto 0);
-signal :  B_i   : in  std_logic_vector(N - 1 downto 0);
-          SAL_o    : out std_logic_vector(N - 1 downto 0);
-		  ALUop_i	     : in  unsigned(3 downto 0);
-		  Zero_o      : out std_logic
+signal   A_i     : std_logic_vector(N - 1 downto 0);
+signal   B_i     : std_logic_vector(N - 1 downto 0);
+signal   SAL_o   : std_logic_vector(N - 1 downto 0);
+signal   ALUop_i : std_logic_vector(3 downto 0);
+signal   Zero_o  : std_logic;
+
+
 
 begin
 
 -- Se instancia la alu
-alu1: ALU port map (
-		A_i     => a_s, 
-		B_i     => b_s,
-		SAL_o   => s_s,
-		ALUop_i => op_S,
-		ZERO_o  => z_o_s
-		);
+alu1: ALU generic map(N) 
+		port map (
+			A_i     => A_i, 
+			B_i     => B_i,
+			SAL_o   => SAL_o,
+			ALUop_i => ALUop_i,
+			ZERO_o  => Zero_o
+			);
 		
 stimul_proc: process
 	VARIABLE aux1 : integer := 0;
@@ -45,15 +48,15 @@ stimul_proc: process
 	
 	
 	-- Suma --
-	A_i <= std_logic_vector(unsigned(5),N);
-	B_i <= std_logic_vector(unsigned(5),N);
+	A_i <= std_logic_vector(to_unsigned(3,N));
+	B_i <= std_logic_vector(to_unsigned(5,N));
 	ALUop_i <= "0000";
 	
-	aux1 := 5+5;
+	aux1 := 3+5;
 	
 	wait for 5 ns;
 	
-	if std_logic_vector(unsigned(aux1),N) /= SAL_o then -- se controla que el valor 
+	if std_logic_vector(to_unsigned(aux1,N)) /= SAL_o then -- se controla que el valor 
     	 assert false
     	 report "ERROR EN LA SUMA";
     	 error1 := true;
@@ -63,11 +66,11 @@ stimul_proc: process
   		-- Resta --
 	ALUop_i <= "0001";
 	
-	aux1 := 5-5;
+	--aux1 := 3-5;
 					
 	wait for 5 ns;
 	
-	if std_logic_vector(unsigned(aux1),N) /= SAL_o then -- se controla que el valor 
+	if std_logic_vector(to_unsigned(aux1,N)) /= SAL_o then -- se controla que el valor 
     	 assert false
     	 report "ERROR EN LA RESTA";
     	 error1 := true;
@@ -120,6 +123,8 @@ stimul_proc: process
   	  	  	  		-- SRL --
 	ALUop_i <= "0110";
 	
+	A_i <= std_logic_vector(to_unsigned(1024,N));
+
 	wait for 5 ns;
  
 
@@ -130,8 +135,21 @@ stimul_proc: process
 	
 	  	  	  	 -- SRA --
 	ALUop_i <= "1000";
-	
-	wait for 5 ns; 
+
+	A_i(63) <= '1'; 
+
+
+	wait for 15 ns; 
+
+  assert not error1 
+  report "Fallo el testeo"
+  severity note;
+
+  assert error1
+  report "Paso el testeo"
+  severity note;
+  wait;
+
 
 	wait;
 	end process;
